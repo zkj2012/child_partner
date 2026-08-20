@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { ChoiceChip } from "@/components/choice-chip";
 import { dailyPrompts } from "@/lib/prompts";
@@ -16,12 +16,28 @@ import type { DailyAnswers } from "@/lib/types";
 export function DailyPicker() {
   const router = useRouter();
   const [answers, setAnswers] = useState<DailyAnswers>({});
+  const durationRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!isProfileComplete(readProfile())) {
       router.replace("/profile?next=/ask");
     }
   }, [router]);
+
+  useEffect(() => {
+    if (!answers.scene) {
+      return;
+    }
+
+    const frame = window.requestAnimationFrame(() => {
+      durationRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [answers.scene]);
 
   function updateAnswer(key: keyof DailyAnswers, value: string) {
     setAnswers((prev) => ({ ...prev, [key]: value }));
@@ -63,41 +79,43 @@ export function DailyPicker() {
         基础信息已记住，今天只需选一下想怎么带娃，马上就能抽卡。
       </div>
 
-      <div className="space-y-3">
-        <div className="max-w-xl rounded-3xl rounded-bl-md bg-slate-900 px-5 py-4 text-white shadow-sm">
-          <div className="text-sm text-orange-200">今天</div>
-          <div className="mt-1 text-lg font-medium">{scenePrompt.question}</div>
-        </div>
-        <div className="grid gap-3">
-          {scenePrompt.options.map((option) => (
-            <ChoiceChip
-              key={option.value}
-              option={option}
-              selected={answers.scene === option.value}
-              onSelect={(value) => updateAnswer("scene", value)}
-            />
-          ))}
-        </div>
-      </div>
-
-      {answers.scene ? (
+      <div className="space-y-6 pb-24">
         <div className="space-y-3">
-          <div className="max-w-xl rounded-3xl rounded-bl-md bg-slate-800 px-5 py-4 text-white shadow-sm">
-            <div className="text-sm text-orange-200">可选</div>
-            <div className="mt-1 text-base font-medium">{durationPrompt.question}</div>
+          <div className="max-w-xl rounded-3xl rounded-bl-md bg-slate-900 px-5 py-4 text-white shadow-sm">
+            <div className="text-sm text-orange-200">今天</div>
+            <div className="mt-1 text-lg font-medium">{scenePrompt.question}</div>
           </div>
           <div className="grid gap-3">
-            {durationPrompt.options.map((option) => (
+            {scenePrompt.options.map((option) => (
               <ChoiceChip
                 key={option.value}
                 option={option}
-                selected={(answers.duration ?? "half") === option.value}
-                onSelect={(value) => updateAnswer("duration", value)}
+                selected={answers.scene === option.value}
+                onSelect={(value) => updateAnswer("scene", value)}
               />
             ))}
           </div>
         </div>
-      ) : null}
+
+        {answers.scene ? (
+          <div ref={durationRef} className="scroll-mt-24 space-y-3">
+            <div className="max-w-xl rounded-3xl rounded-bl-md bg-slate-800 px-5 py-4 text-white shadow-sm">
+              <div className="text-sm text-orange-200">可选</div>
+              <div className="mt-1 text-base font-medium">{durationPrompt.question}</div>
+            </div>
+            <div className="grid gap-3">
+              {durationPrompt.options.map((option) => (
+                <ChoiceChip
+                  key={option.value}
+                  option={option}
+                  selected={(answers.duration ?? "half") === option.value}
+                  onSelect={(value) => updateAnswer("duration", value)}
+                />
+              ))}
+            </div>
+          </div>
+        ) : null}
+      </div>
 
       <div className="sticky-action-bar">
         <div className="flex items-center justify-between gap-3 rounded-3xl border border-orange-100 bg-white px-4 py-3 shadow-sm">

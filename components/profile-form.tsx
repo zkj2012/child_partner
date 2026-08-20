@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { ChoiceChip } from "@/components/choice-chip";
@@ -16,6 +16,7 @@ export function ProfileForm({ redirectTo = "/ask" }: ProfileFormProps) {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<ProfileAnswers>(() => readProfile() ?? {});
+  const activeQuestionRef = useRef<HTMLDivElement>(null);
 
   const activePrompt = profilePrompts[currentStep];
   const canContinue = Boolean(answers[activePrompt.id as keyof ProfileAnswers]);
@@ -23,6 +24,17 @@ export function ProfileForm({ redirectTo = "/ask" }: ProfileFormProps) {
     () => profilePrompts.slice(0, currentStep + 1),
     [currentStep],
   );
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      activeQuestionRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    });
+
+    return () => window.cancelAnimationFrame(frame);
+  }, [currentStep]);
 
   function updateAnswer(value: string) {
     setAnswers((prev) => ({
@@ -51,14 +63,18 @@ export function ProfileForm({ redirectTo = "/ask" }: ProfileFormProps) {
         这些信息只需填一次，以后抽卡时不会再问。随时可以回来修改。
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 pb-24">
         {answeredPrompts.map((prompt, index) => {
           const value = answers[prompt.id as keyof ProfileAnswers];
           const selectedOption = prompt.options.find((option) => option.value === value);
           const isActive = index === currentStep;
 
           return (
-            <div key={prompt.id} className="space-y-3">
+            <div
+              key={prompt.id}
+              ref={isActive ? activeQuestionRef : null}
+              className="scroll-mt-24 space-y-3"
+            >
               <div className="max-w-xl rounded-3xl rounded-bl-md bg-slate-900 px-5 py-4 text-white shadow-sm">
                 <div className="text-sm text-orange-200">基础信息 {index + 1}</div>
                 <div className="mt-1 text-base font-medium">{prompt.question}</div>
