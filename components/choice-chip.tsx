@@ -13,7 +13,7 @@ export function ChoiceChip({ option, selected, onSelect }: ChoiceChipProps) {
     <button
       type="button"
       onClick={() => onSelect(option.value)}
-      className={`w-full rounded-3xl border px-4 py-4 text-left transition ${
+      className={`w-full rounded-3xl border px-4 py-4 text-left transition active:scale-[0.99] ${
         selected
           ? "border-rose-400 bg-rose-50 shadow-sm"
           : "border-orange-100 bg-white hover:border-orange-200 hover:bg-orange-50/50"

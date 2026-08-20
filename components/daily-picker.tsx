@@ -68,7 +68,7 @@ export function DailyPicker() {
           <div className="text-sm text-orange-200">今天</div>
           <div className="mt-1 text-lg font-medium">{scenePrompt.question}</div>
         </div>
-        <div className="grid gap-3 sm:grid-cols-3">
+        <div className="grid gap-3">
           {scenePrompt.options.map((option) => (
             <ChoiceChip
               key={option.value}
@@ -86,7 +86,7 @@ export function DailyPicker() {
             <div className="text-sm text-orange-200">可选</div>
             <div className="mt-1 text-base font-medium">{durationPrompt.question}</div>
           </div>
-          <div className="grid gap-3 sm:grid-cols-3">
+          <div className="grid gap-3">
             {durationPrompt.options.map((option) => (
               <ChoiceChip
                 key={option.value}
@@ -99,18 +99,20 @@ export function DailyPicker() {
         </div>
       ) : null}
 
-      <div className="flex items-center justify-between rounded-3xl border border-orange-100 bg-white px-4 py-4">
-        <div className="text-sm text-slate-500">
-          {answers.scene ? "选好了就抽卡" : "先选一种带娃方式"}
+      <div className="sticky-action-bar">
+        <div className="flex items-center justify-between gap-3 rounded-3xl border border-orange-100 bg-white px-4 py-3 shadow-sm">
+          <div className="min-w-0 text-sm text-slate-500">
+            {answers.scene ? "选好了就抽卡" : "先选一种带娃方式"}
+          </div>
+          <button
+            type="button"
+            onClick={startDraw}
+            disabled={!answers.scene}
+            className="shrink-0 rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:bg-slate-300"
+          >
+            开始抽卡
+          </button>
         </div>
-        <button
-          type="button"
-          onClick={startDraw}
-          disabled={!answers.scene}
-          className="rounded-full bg-slate-900 px-6 py-2.5 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:bg-slate-300"
-        >
-          开始抽卡
-        </button>
       </div>
     </div>
   );

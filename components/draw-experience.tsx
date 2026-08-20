@@ -123,15 +123,17 @@ export function DrawExperience({
 
   return (
     <>
-      <div className="mt-6 rounded-[32px] border border-orange-100 bg-white/80 p-4 text-sm text-slate-600 shadow-sm">
+      <div className="mt-5 rounded-[24px] border border-orange-100 bg-white/80 p-3.5 text-sm leading-6 text-slate-600 shadow-sm sm:mt-6 sm:rounded-[32px] sm:p-4">
         本轮基于这些条件抽卡：
-        <span className="ml-2 font-medium text-slate-900">{answerSummary}</span>
+        <span className="mt-1 block font-medium text-slate-900 sm:ml-2 sm:mt-0 sm:inline">
+          {answerSummary}
+        </span>
       </div>
 
-      <div className="mt-6 flex gap-3">
+      <div className="mt-4 flex flex-wrap gap-2 sm:mt-6 sm:gap-3">
         <Link
           href="/ask"
-          className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700"
+          className="inline-flex min-h-11 flex-1 items-center justify-center rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 sm:flex-none"
         >
           换种带娃方式
         </Link>
@@ -139,19 +141,23 @@ export function DrawExperience({
           type="button"
           onClick={reshuffle}
           disabled={loading || results.length === 0}
-          className="rounded-full bg-slate-900 px-5 py-2 text-sm font-medium text-white disabled:bg-slate-300"
+          className="inline-flex min-h-11 flex-1 items-center justify-center rounded-full bg-slate-900 px-5 py-2 text-sm font-medium text-white disabled:bg-slate-300 sm:flex-none"
         >
           {loading ? "重新洗牌中..." : "再来三个"}
         </button>
       </div>
 
       {error ? (
-        <div className="mt-6 rounded-[36px] border border-red-200 bg-red-50 px-6 py-10 text-red-700">
+        <div className="mt-5 rounded-[28px] border border-red-200 bg-red-50 px-4 py-8 text-red-700 sm:mt-6 sm:rounded-[36px] sm:px-6 sm:py-10">
           {error}
         </div>
       ) : null}
 
-      <div className="mt-10 grid gap-6 lg:grid-cols-3">
+      <p className="mt-5 text-center text-xs text-slate-400 lg:hidden">
+        左右滑动查看 3 张卡
+      </p>
+
+      <div className="card-rail mt-3 sm:mt-6 lg:mt-10">
         {results.map((item, index) => (
           <DrawCard
             key={item.activity.id}
@@ -163,7 +169,7 @@ export function DrawExperience({
       </div>
 
       {!loading && !error && results.length === 0 ? (
-        <div className="mt-10 rounded-[36px] border border-dashed border-orange-200 bg-white/70 px-6 py-12 text-center text-slate-500">
+        <div className="mt-8 rounded-[28px] border border-dashed border-orange-200 bg-white/70 px-4 py-10 text-center text-slate-500 sm:mt-10 sm:rounded-[36px] sm:px-6 sm:py-12">
           这轮没有抽到合适结果，试试重新答题或再来三个。
         </div>
       ) : null}

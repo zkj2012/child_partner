@@ -19,26 +19,27 @@ export default async function ActivityDetailPage({
   }
 
   return (
-    <main className="min-h-screen bg-[#fffdf8] px-6 py-10">
+    <main className="page-shell bg-[#fffdf8]">
       <div className="mx-auto w-full max-w-4xl">
         <Link href="/draw" className="text-sm font-medium text-slate-500">
           ← 返回抽卡结果
         </Link>
 
-        <div className="mt-6 rounded-[36px] border border-orange-100 bg-white p-7 shadow-sm">
+        <div className="mt-5 rounded-[28px] border border-orange-100 bg-white p-4 shadow-sm sm:mt-6 sm:rounded-[36px] sm:p-7">
           <div className="text-sm font-semibold text-rose-500">
             {categoryLabels[activity.category]}
           </div>
-          <h1 className="mt-2 text-4xl font-black tracking-tight text-slate-950">
+          <h1 className="mt-2 text-[1.75rem] font-black tracking-tight text-slate-950 sm:text-4xl">
             {activity.title}
           </h1>
-          <p className="mt-4 text-base leading-8 text-slate-600">{activity.summary}</p>
+          <p className="mt-3 text-sm leading-7 text-slate-600 sm:mt-4 sm:text-base sm:leading-8">
+            {activity.summary}
+          </p>
 
-          <div className="mt-5 flex flex-wrap gap-2 text-sm">
+          <div className="mt-4 flex flex-wrap gap-2 text-sm sm:mt-5">
             <span className="rounded-full bg-orange-50 px-3 py-1 text-orange-700">
-              适龄 {Math.floor(activity.minAgeMonths / 12)}-{
-                Math.ceil(activity.maxAgeMonths / 12)
-              } 岁
+              适龄 {Math.floor(activity.minAgeMonths / 12)}-
+              {Math.ceil(activity.maxAgeMonths / 12)} 岁
             </span>
             <span className="rounded-full bg-sky-50 px-3 py-1 text-sky-700">
               {activity.durationMinutes} 分钟
@@ -48,8 +49,8 @@ export default async function ActivityDetailPage({
             </span>
           </div>
 
-          <div className="mt-8 grid gap-5 md:grid-cols-2">
-            <section className="rounded-3xl bg-slate-50 p-5">
+          <div className="mt-6 grid gap-4 sm:mt-8 sm:gap-5 md:grid-cols-2">
+            <section className="rounded-2xl bg-slate-50 p-4 sm:rounded-3xl sm:p-5">
               <h2 className="text-lg font-bold text-slate-900">准备什么</h2>
               <p className="mt-2 text-sm leading-7 text-slate-600">
                 {activity.locationHint}
@@ -61,7 +62,7 @@ export default async function ActivityDetailPage({
               </ul>
             </section>
 
-            <section className="rounded-3xl bg-slate-50 p-5">
+            <section className="rounded-2xl bg-slate-50 p-4 sm:rounded-3xl sm:p-5">
               <h2 className="text-lg font-bold text-slate-900">怎么玩</h2>
               <ol className="mt-3 space-y-2 text-sm leading-7 text-slate-600">
                 {activity.steps.map((step, index) => (
@@ -73,7 +74,7 @@ export default async function ActivityDetailPage({
             </section>
           </div>
 
-          <section className="mt-5 rounded-3xl bg-rose-50 p-5">
+          <section className="mt-4 rounded-2xl bg-rose-50 p-4 sm:mt-5 sm:rounded-3xl sm:p-5">
             <h2 className="text-lg font-bold text-slate-900">安全提醒</h2>
             <ul className="mt-3 space-y-2 text-sm leading-7 text-slate-600">
               {activity.safetyTips.map((tip) => (

@@ -86,28 +86,30 @@ export function ProfileForm({ redirectTo = "/ask" }: ProfileFormProps) {
         })}
       </div>
 
-      <div className="flex items-center justify-between rounded-3xl border border-orange-100 bg-white px-4 py-4">
-        <div className="text-sm text-slate-500">
-          {currentStep + 1} / {profilePrompts.length}
-        </div>
-        <div className="flex gap-3">
-          {currentStep > 0 ? (
+      <div className="sticky-action-bar">
+        <div className="flex items-center justify-between gap-3 rounded-3xl border border-orange-100 bg-white px-4 py-3 shadow-sm">
+          <div className="text-sm text-slate-500">
+            {currentStep + 1} / {profilePrompts.length}
+          </div>
+          <div className="flex gap-2">
+            {currentStep > 0 ? (
+              <button
+                type="button"
+                onClick={() => setCurrentStep((step) => step - 1)}
+                className="rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700"
+              >
+                上一题
+              </button>
+            ) : null}
             <button
               type="button"
-              onClick={() => setCurrentStep((step) => step - 1)}
-              className="rounded-full border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700"
+              onClick={goNext}
+              disabled={!canContinue}
+              className="rounded-full bg-slate-900 px-5 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:bg-slate-300"
             >
-              上一题
+              {currentStep === profilePrompts.length - 1 ? "保存并继续" : "下一题"}
             </button>
-          ) : null}
-          <button
-            type="button"
-            onClick={goNext}
-            disabled={!canContinue}
-            className="rounded-full bg-slate-900 px-5 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:bg-slate-300"
-          >
-            {currentStep === profilePrompts.length - 1 ? "保存并继续" : "下一题"}
-          </button>
+          </div>
         </div>
       </div>
     </div>
