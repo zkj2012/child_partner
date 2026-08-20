@@ -40,6 +40,12 @@ export default function Home() {
               >
                 基础设置
               </Link>
+              <Link
+                href="/admin"
+                className="inline-flex items-center justify-center rounded-full border border-dashed border-slate-300 bg-white/70 px-6 py-3 text-base font-semibold text-slate-500 transition hover:border-slate-400"
+              >
+                内容审核
+              </Link>
             </div>
 
             <div className="grid gap-3 pt-2 sm:grid-cols-3">

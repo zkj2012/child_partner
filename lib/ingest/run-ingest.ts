@@ -82,8 +82,15 @@ export async function runContentIngest(): Promise<IngestSummary> {
   };
 }
 
-/** 将审核通过的候选地点转为正式活动（draft 状态，待补充步骤） */
-export async function approveCandidate(candidateId: string) {
+type ApproveOptions = {
+  publish?: boolean;
+};
+
+/** 将审核通过的候选地点转为正式活动 */
+export async function approveCandidate(
+  candidateId: string,
+  options: ApproveOptions = {},
+) {
   const candidate = await prisma.activityCandidate.findUnique({
     where: { id: candidateId },
   });
@@ -92,7 +99,10 @@ export async function approveCandidate(candidateId: string) {
     return null;
   }
 
-  const slug = `amap-${candidate.externalId ?? candidate.id}`.toLowerCase().replace(/[^a-z0-9-]/g, "-");
+  const publish = options.publish ?? true;
+  const slug = `amap-${candidate.externalId ?? candidate.id}`
+    .toLowerCase()
+    .replace(/[^a-z0-9-]/g, "-");
 
   const activity = await prisma.activity.upsert({
     where: { slug },
@@ -120,18 +130,23 @@ export async function approveCandidate(candidateId: string) {
         "控制停留时长，避免孩子过度疲劳。",
       ],
       safetyTips: ["全程牵护。", "热门区域注意防走失。"],
-      recommendationRaw: ["来自网络候选库，待你补充后会更好用。"],
+      recommendationRaw: ["来自网络候选库，适合周末短途亲子出行。"],
       source: candidate.source,
-      sourceUrl: typeof candidate.rawPayload === "object" && candidate.rawPayload !== null && "location" in candidate.rawPayload
-        ? String((candidate.rawPayload as { location?: string }).location ?? "")
-        : null,
-      status: "draft",
-      qualityScore: 50,
+      sourceUrl:
+        typeof candidate.rawPayload === "object" &&
+        candidate.rawPayload !== null &&
+        "location" in candidate.rawPayload
+          ? String((candidate.rawPayload as { location?: string }).location ?? "")
+          : null,
+      status: publish ? "published" : "draft",
+      qualityScore: publish ? 70 : 50,
     },
     update: {
       title: candidate.title,
       summary: candidate.summary ?? undefined,
       district: candidate.district ?? undefined,
+      status: publish ? "published" : "draft",
+      qualityScore: publish ? 70 : 50,
       updatedAt: new Date(),
     },
   });
@@ -142,4 +157,19 @@ export async function approveCandidate(candidateId: string) {
   });
 
   return activity;
+}
+
+export async function rejectCandidate(candidateId: string) {
+  const candidate = await prisma.activityCandidate.findUnique({
+    where: { id: candidateId },
+  });
+
+  if (!candidate || candidate.status !== "pending") {
+    return null;
+  }
+
+  return prisma.activityCandidate.update({
+    where: { id: candidateId },
+    data: { status: "rejected" },
+  });
 }

@@ -87,14 +87,25 @@ Authorization: Bearer <CRON_SECRET>
 
 ## 审核候选并上线
 
-候选通过后，可调用 `approveCandidate(id)` 生成 `status = draft` 的活动，再人工补充步骤和安全提示，改为 `published`。
+打开站点的审核页：
 
-后续可加一个简单的 `/admin` 审核页；当前可通过 Prisma Studio：
+```text
+/admin
+```
+
+输入 `CRON_SECRET` 后可以看到待审核候选。支持：
+
+- **通过并上线**：写入 `Activity` 且 `status = published`，立刻进入抽卡推荐
+- **通过为草稿**：先入库但不推荐
+- **拒绝**：标记为 `rejected`
+
+也可通过 Prisma Studio：
 
 ```bash
 npx prisma studio
 ```
 
+或调用代码里的 `approveCandidate(id)` / `rejectCandidate(id)`。
 ## 推荐逻辑与反馈
 
 - 用户反馈写入 `FeedbackEvent`（按 `activitySlug` 关联）
