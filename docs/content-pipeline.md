@@ -85,6 +85,16 @@ Authorization: Bearer <CRON_SECRET>
    - 写入 `ActivityCandidate`，状态为 `pending`
    - **不会自动上线**，避免低质量内容直接进入推荐
 
+## 主动录入（推荐）
+
+打开 `/admin`，选择「主动录入」：
+
+1. 粘贴你看到的好玩内容链接（来源备忘）
+2. 改写成有钩子的标题、简介、材料、步骤
+3. 保存后可 **复制详情链接**，也可立刻上线进入抽卡
+
+这比自动抓取更适合「有趣」内容：链接只做来源，玩法由你把关。
+
 ## 审核候选并上线
 
 打开站点的审核页：
@@ -93,7 +103,7 @@ Authorization: Bearer <CRON_SECRET>
 /admin
 ```
 
-输入 `CRON_SECRET` 后可以看到待审核候选。支持：
+切换到「审核高德候选」。输入 `CRON_SECRET` 后可以看到待审核候选。支持：
 
 - **通过并上线**：写入 `Activity` 且 `status = published`，立刻进入抽卡推荐
 - **通过为草稿**：先入库但不推荐
@@ -105,8 +115,7 @@ Authorization: Bearer <CRON_SECRET>
 npx prisma studio
 ```
 
-或调用代码里的 `approveCandidate(id)` / `rejectCandidate(id)`。
-## 推荐逻辑与反馈
+或调用代码里的 `approveCandidate(id)` / `rejectCandidate(id)`。## 推荐逻辑与反馈
 
 - 用户反馈写入 `FeedbackEvent`（按 `activitySlug` 关联）
 - 反馈仍会在客户端 `localStorage` 缓存，用于即时调整排序
