@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { CopyPlayLink } from "@/components/copy-play-link";
+
 const highlights = [
   "基础信息只填一次，以后不用重复录入",
   "每天只问一句：今天想怎么带娃",
@@ -29,13 +31,14 @@ export default function Home() {
 
             <div className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-3">
               <Link
-                href="/ask"
+                href="/play"
                 className="inline-flex min-h-12 items-center justify-center rounded-full bg-slate-950 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-slate-900/10"
               >
                 今天带娃抽什么
               </Link>
+              <CopyPlayLink />
               <Link
-                href="/profile"
+                href="/profile?next=/play"
                 className="inline-flex min-h-12 items-center justify-center rounded-full border border-slate-200 bg-white px-6 py-3 text-base font-semibold text-slate-700"
               >
                 基础设置

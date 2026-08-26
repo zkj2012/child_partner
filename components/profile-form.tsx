@@ -12,7 +12,7 @@ type ProfileFormProps = {
   redirectTo?: string;
 };
 
-export function ProfileForm({ redirectTo = "/ask" }: ProfileFormProps) {
+export function ProfileForm({ redirectTo = "/play" }: ProfileFormProps) {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<ProfileAnswers>(() => readProfile() ?? {});

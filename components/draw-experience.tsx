@@ -132,7 +132,7 @@ export function DrawExperience({
 
       <div className="mt-4 flex flex-wrap gap-2 sm:mt-6 sm:gap-3">
         <Link
-          href="/ask"
+          href="/play"
           className="inline-flex min-h-11 flex-1 items-center justify-center rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 sm:flex-none"
         >
           换种带娃方式

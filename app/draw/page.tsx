@@ -48,7 +48,7 @@ export default async function DrawPage({ searchParams }: DrawPageProps) {
             还没有今天的抽卡条件，先选一下今天想怎么带娃吧。
             <div className="mt-5">
               <Link
-                href="/ask"
+                href="/play"
                 className="inline-flex min-h-11 items-center justify-center rounded-full bg-slate-900 px-5 py-3 text-sm font-semibold text-white"
               >
                 去选今天怎么带娃

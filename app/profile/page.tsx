@@ -8,7 +8,7 @@ type ProfilePageProps = {
 
 export default async function ProfilePage({ searchParams }: ProfilePageProps) {
   const { next } = await searchParams;
-  const redirectTo = next && next.startsWith("/") ? next : "/ask";
+  const redirectTo = next && next.startsWith("/") ? next : "/play";
 
   return (
     <main className="page-shell bg-[#fffaf5]">

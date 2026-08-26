@@ -13,16 +13,21 @@ import {
 } from "@/lib/storage";
 import type { DailyAnswers } from "@/lib/types";
 
-export function DailyPicker() {
+type DailyPickerProps = {
+  /** 分享入口路径，基础设置完成后会回到这里 */
+  entryPath?: string;
+};
+
+export function DailyPicker({ entryPath = "/play" }: DailyPickerProps) {
   const router = useRouter();
   const [answers, setAnswers] = useState<DailyAnswers>({});
   const durationRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!isProfileComplete(readProfile())) {
-      router.replace("/profile?next=/ask");
+      router.replace(`/profile?next=${encodeURIComponent(entryPath)}`);
     }
-  }, [router]);
+  }, [router, entryPath]);
 
   useEffect(() => {
     if (!answers.scene) {
