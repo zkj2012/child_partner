@@ -19,11 +19,7 @@ type DrawExperienceProps = {
   initialResults: RecommendationResult[];
 };
 
-function readFeedback() {
-  if (typeof window === "undefined") {
-    return [] as FeedbackEvent[];
-  }
-
+function readFeedback(): FeedbackEvent[] {
   try {
     const raw = localStorage.getItem(FEEDBACK_KEY);
     return raw ? (JSON.parse(raw) as FeedbackEvent[]) : [];
@@ -36,7 +32,8 @@ export function DrawExperience({
   answers,
   initialResults,
 }: DrawExperienceProps) {
-  const [feedback, setFeedback] = useState<FeedbackEvent[]>(readFeedback);
+  // 初始固定为空，避免 SSR / 客户端 localStorage 不一致导致白屏
+  const [feedback, setFeedback] = useState<FeedbackEvent[]>([]);
   const [results, setResults] = useState<RecommendationResult[]>(initialResults);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -62,9 +59,13 @@ export function DrawExperience({
     return dailyLabel + (profileHint ? `（${profileHint}…）` : "");
   }, [answers]);
 
+  function currentFeedback() {
+    return feedback.length > 0 ? feedback : readFeedback();
+  }
+
   async function handleFeedback(action: FeedbackAction, item: RecommendationResult) {
     const nextFeedback = [
-      ...feedback,
+      ...currentFeedback(),
       {
         activityId: item.activity.id,
         action,
@@ -98,7 +99,7 @@ export function DrawExperience({
         },
         body: JSON.stringify({
           answers,
-          feedback,
+          feedback: currentFeedback(),
           excludeIds: results.map((result) => result.activity.id),
         }),
       });

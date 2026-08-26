@@ -1,10 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 import { ChoiceChip } from "@/components/choice-chip";
 import { dailyPrompts } from "@/lib/prompts";
+import { useIsClient } from "@/lib/use-is-client";
 import {
   isProfileComplete,
   mergeAnswers,
@@ -20,14 +22,22 @@ type DailyPickerProps = {
 
 export function DailyPicker({ entryPath = "/play" }: DailyPickerProps) {
   const router = useRouter();
+  const isClient = useIsClient();
   const [answers, setAnswers] = useState<DailyAnswers>({});
   const durationRef = useRef<HTMLDivElement>(null);
+  const profilePath = `/profile?next=${encodeURIComponent(entryPath)}`;
+  const profile = isClient ? readProfile() : null;
+  const profileReady = isProfileComplete(profile);
 
   useEffect(() => {
-    if (!isProfileComplete(readProfile())) {
-      router.replace(`/profile?next=${encodeURIComponent(entryPath)}`);
+    if (!isClient) {
+      return;
     }
-  }, [router, entryPath]);
+
+    if (!isProfileComplete(readProfile())) {
+      router.replace(profilePath);
+    }
+  }, [isClient, router, profilePath]);
 
   useEffect(() => {
     if (!answers.scene) {
@@ -49,8 +59,8 @@ export function DailyPicker({ entryPath = "/play" }: DailyPickerProps) {
   }
 
   function startDraw() {
-    const profile = readProfile();
-    if (!isProfileComplete(profile) || !answers.scene) {
+    const latest = readProfile();
+    if (!isProfileComplete(latest) || !answers.scene) {
       return;
     }
 
@@ -61,16 +71,29 @@ export function DailyPicker({ entryPath = "/play" }: DailyPickerProps) {
 
     saveDaily(daily);
 
-    const merged = mergeAnswers(profile, daily);
+    const merged = mergeAnswers(latest, daily);
     const query = new URLSearchParams(merged as Record<string, string>);
     router.push(`/draw?${query.toString()}`);
   }
 
-  const profile = readProfile();
-  if (!isProfileComplete(profile)) {
+  if (!isClient) {
     return (
       <div className="rounded-3xl border border-dashed border-orange-200 bg-white/70 px-6 py-16 text-center text-slate-500">
-        加载中…
+        正在打开…
+      </div>
+    );
+  }
+
+  if (!profileReady) {
+    return (
+      <div className="rounded-3xl border border-dashed border-orange-200 bg-white/70 px-6 py-12 text-center text-slate-600">
+        <p>第一次使用，先花 20 秒设置一下孩子信息。</p>
+        <Link
+          href={profilePath}
+          className="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white"
+        >
+          去设置
+        </Link>
       </div>
     );
   }

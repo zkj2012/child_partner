@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { ChoiceChip } from "@/components/choice-chip";
 import { profilePrompts } from "@/lib/prompts";
 import { readProfile, saveProfile } from "@/lib/storage";
+import { useIsClient } from "@/lib/use-is-client";
 import type { ProfileAnswers } from "@/lib/types";
 
 type ProfileFormProps = {
@@ -14,9 +15,19 @@ type ProfileFormProps = {
 
 export function ProfileForm({ redirectTo = "/play" }: ProfileFormProps) {
   const router = useRouter();
+  const isClient = useIsClient();
   const [currentStep, setCurrentStep] = useState(0);
-  const [answers, setAnswers] = useState<ProfileAnswers>(() => readProfile() ?? {});
+  const [answers, setAnswers] = useState<ProfileAnswers>({});
   const activeQuestionRef = useRef<HTMLDivElement>(null);
+  const loadedRef = useRef(false);
+
+  useEffect(() => {
+    if (!isClient || loadedRef.current) {
+      return;
+    }
+    loadedRef.current = true;
+    setAnswers(readProfile() ?? {});
+  }, [isClient]);
 
   const activePrompt = profilePrompts[currentStep];
   const canContinue = Boolean(answers[activePrompt.id as keyof ProfileAnswers]);
@@ -26,6 +37,10 @@ export function ProfileForm({ redirectTo = "/play" }: ProfileFormProps) {
   );
 
   useEffect(() => {
+    if (!isClient) {
+      return;
+    }
+
     const frame = window.requestAnimationFrame(() => {
       activeQuestionRef.current?.scrollIntoView({
         behavior: "smooth",
@@ -34,7 +49,7 @@ export function ProfileForm({ redirectTo = "/play" }: ProfileFormProps) {
     });
 
     return () => window.cancelAnimationFrame(frame);
-  }, [currentStep]);
+  }, [currentStep, isClient]);
 
   function updateAnswer(value: string) {
     setAnswers((prev) => ({
@@ -55,6 +70,14 @@ export function ProfileForm({ redirectTo = "/play" }: ProfileFormProps) {
     }
 
     setCurrentStep((step) => step + 1);
+  }
+
+  if (!isClient) {
+    return (
+      <div className="rounded-3xl border border-dashed border-orange-200 bg-white/70 px-6 py-16 text-center text-slate-500">
+        正在打开…
+      </div>
+    );
   }
 
   return (
