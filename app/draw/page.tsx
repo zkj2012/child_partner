@@ -36,10 +36,10 @@ export default async function DrawPage({ searchParams }: DrawPageProps) {
             ← 返回首页
           </Link>
           <h1 className="mt-3 text-[1.75rem] font-black tracking-tight text-slate-950 sm:text-4xl">
-            今天适合你家的 3 张卡
+            今天适合你家的活动
           </h1>
           <p className="mt-2 max-w-2xl text-sm leading-7 text-slate-600 sm:mt-3 sm:text-base sm:leading-8">
-            先翻卡，再决定今天去哪玩或做什么。手机上可左右滑动查看。
+            手机上一张一张看：不想要就「下一条」，感兴趣就「想去」看玩法。
           </p>
         </div>
 

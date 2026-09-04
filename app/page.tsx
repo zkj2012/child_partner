@@ -5,7 +5,7 @@ import { CopyPlayLink } from "@/components/copy-play-link";
 const highlights = [
   "基础信息只填一次，以后不用重复录入",
   "每天只问一句：今天想怎么带娃",
-  "一次抽 3 张卡，快速定下周末安排",
+  "一次给出几个选项，一张一张挑到想去的",
 ];
 
 export default function Home() {

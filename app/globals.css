@@ -95,36 +95,6 @@ a:active {
 
 .card-rail {
   display: grid;
-  gap: 1rem;
-}
-
-@media (max-width: 1023px) {
-  .card-rail {
-    display: flex;
-    gap: 0.875rem;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-padding-inline: var(--page-pad-x);
-    padding-bottom: 0.5rem;
-    margin-inline: calc(var(--page-pad-x) * -1);
-    padding-inline: var(--page-pad-x);
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-
-  .card-rail::-webkit-scrollbar {
-    display: none;
-  }
-
-  .card-rail > * {
-    flex: 0 0 min(86vw, 22rem);
-    scroll-snap-align: center;
-  }
-}
-
-@media (min-width: 1024px) {
-  .card-rail {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1.5rem;
-  }
+  gap: 1.5rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
