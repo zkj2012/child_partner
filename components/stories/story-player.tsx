@@ -71,10 +71,16 @@ export function StoryPlayer({
     setSaidIds((current) => (current.includes(beat.id) ? current : [...current, beat.id]));
   }
 
+  const mediaFrame = choicePair
+    ? "mx-auto w-full lg:w-[min(100%,calc((100dvh-16rem)*16/9))]"
+    : "mx-auto w-full lg:w-[min(100%,calc((100dvh-10.5rem)*16/9))]";
+
   return (
-    <main className={`${story.wash} min-h-dvh px-4 py-4 sm:px-6 sm:py-6 lg:px-8`}>
-      <div className="mx-auto w-full max-w-6xl">
-        <div className="flex items-center justify-between gap-3 text-sm font-semibold text-slate-500">
+    <main
+      className={`${story.wash} min-h-dvh px-4 py-4 sm:px-6 sm:py-6 lg:flex lg:h-dvh lg:flex-col lg:overflow-hidden lg:px-8 lg:py-5`}
+    >
+      <div className="mx-auto flex w-full max-w-6xl flex-col lg:min-h-0 lg:max-w-none lg:flex-1">
+        <div className="flex shrink-0 items-center justify-between gap-3 text-sm font-semibold text-slate-500">
           <Link href="/stories">全部故事</Link>
           <div>{story.title}</div>
           <div>第 {history.length + 1} 幕</div>
@@ -83,16 +89,18 @@ export function StoryPlayer({
         <div
           className={
             choicePair
-              ? "mt-4 lg:mt-6 lg:grid lg:grid-cols-[minmax(9rem,0.78fr)_minmax(0,1.55fr)_minmax(9rem,0.78fr)] lg:items-stretch lg:gap-6"
-              : "mt-4 grid items-start gap-5 lg:mt-6 lg:grid-cols-[minmax(0,1.15fr)_minmax(20rem,0.85fr)] lg:gap-8"
+              ? "mt-4 lg:mt-4 lg:grid lg:min-h-0 lg:flex-1 lg:grid-cols-[minmax(8.5rem,11rem)_minmax(0,1fr)_minmax(8.5rem,11rem)] lg:items-center lg:gap-5"
+              : "mt-4 grid items-center gap-5 lg:mt-4 lg:min-h-0 lg:flex-1 lg:grid-cols-[minmax(0,1fr)_minmax(18rem,22rem)] lg:gap-8"
           }
         >
-          <div className={choicePair ? "lg:col-start-2 lg:row-start-1" : "lg:sticky lg:top-6"} key={beat.id}>
-            {beat.video ? (
-              <StoryClip src={beat.video} label={beat.title} />
-            ) : (
-              <StoryStage scene={beat.scene} label={beat.title} />
-            )}
+          <div className={choicePair ? "lg:col-start-2 lg:row-start-1" : undefined} key={beat.id}>
+            <div className={mediaFrame}>
+              {beat.video ? (
+                <StoryClip src={beat.video} label={beat.title} />
+              ) : (
+                <StoryStage scene={beat.scene} label={beat.title} />
+              )}
+            </div>
             {choicePair && beat.concept ? (
               <div className="mt-4 text-center">
                 <div className="text-5xl font-black tracking-tight text-slate-950 sm:text-6xl">
@@ -196,7 +204,7 @@ export function StoryPlayer({
           )}
         </div>
 
-        <div className="mt-6 flex items-center justify-between text-sm font-semibold text-slate-500">
+        <div className="mt-6 flex shrink-0 items-center justify-between text-sm font-semibold text-slate-500 lg:mt-3">
           <button type="button" onClick={back} disabled={history.length === 0} className="disabled:opacity-30">
             上一步
           </button>

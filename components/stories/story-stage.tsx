@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 
+import { feelDrawers } from "@/components/stories/scenes-feel";
 import { metroDrawers } from "@/components/stories/scenes-metro";
 import { toyDrawers } from "@/components/stories/scenes-toy";
 import type { SceneId } from "@/lib/stories/types";
@@ -7,6 +8,7 @@ import type { SceneId } from "@/lib/stories/types";
 const drawers = {
   ...metroDrawers,
   ...toyDrawers,
+  ...feelDrawers,
 } satisfies Record<SceneId, () => ReactNode>;
 
 export function StoryStage({ scene, label, bare = false }: { scene: SceneId; label: string; bare?: boolean }) {

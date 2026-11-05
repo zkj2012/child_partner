@@ -112,10 +112,12 @@ export function Kid({
   shirt = "#fb7185",
   mood = "smile",
   pose = "stand",
+  arm = "down",
 }: {
   shirt?: string;
   mood?: Mood;
   pose?: Pose;
+  arm?: "down" | "out";
 }) {
   const headY = pose === "sit" ? -58 : -96;
 
@@ -128,7 +130,11 @@ export function Kid({
           <rect x="2" y="-34" width="10" height="32" rx="5" fill="#334155" />
           <rect x="-18" y="-74" width="36" height="44" rx="14" fill={shirt} />
           <rect x="-30" y="-68" width="14" height="26" rx="7" fill="#fdc89a" />
-          <rect x="16" y="-68" width="14" height="26" rx="7" fill="#fdc89a" />
+          {arm === "out" ? (
+            <rect x="14" y="-62" width="34" height="14" rx="7" fill="#fdc89a" />
+          ) : (
+            <rect x="16" y="-68" width="14" height="26" rx="7" fill="#fdc89a" />
+          )}
         </>
       ) : (
         <>

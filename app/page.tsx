@@ -124,11 +124,11 @@ export default function Home() {
             <h2 className="mt-2 text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
               出门坐地铁、玩挖掘机，
               <br />
-              选不同，结果就不同。
+              不开心了可以说出来。
             </h2>
             <p className="mt-3 text-sm leading-7 text-slate-600">
               投到电视上。家长念画面上的话，和孩子商量，再帮忙点。
-              叫出中文和英文名字，故事才会继续。推开别人时会看见警车，也可以重新选。
+              叫出中文和英文名字，故事才会继续。打人会痛，救护车会来，也可以重新选。
             </p>
           </div>
           <div className="flex flex-col gap-3">
@@ -143,6 +143,12 @@ export default function Home() {
               className="inline-flex min-h-12 items-center justify-center rounded-full border border-slate-200 bg-white px-5 text-base font-bold text-slate-800"
             >
               一辆挖掘机
+            </Link>
+            <Link
+              href="/stories/say-it"
+              className="inline-flex min-h-12 items-center justify-center rounded-full border border-slate-200 bg-white px-5 text-base font-bold text-slate-800"
+            >
+              不开心了
             </Link>
           </div>
         </section>

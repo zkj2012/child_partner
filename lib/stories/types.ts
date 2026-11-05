@@ -24,7 +24,20 @@ export type SceneId =
   | "toy-police"
   | "toy-sorry"
   | "toy-mend"
-  | "toy-bye";
+  | "toy-bye"
+  | "feel-play"
+  | "feel-fall"
+  | "feel-choose"
+  | "feel-listen"
+  | "feel-hurt"
+  | "feel-ride"
+  | "feel-tell"
+  | "feel-hug"
+  | "feel-build"
+  | "feel-hit"
+  | "feel-ambulance"
+  | "feel-hospital"
+  | "feel-sorry";
 
 export type StoryConcept = {
   zh: string;
