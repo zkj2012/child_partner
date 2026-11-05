@@ -47,6 +47,10 @@ export default function PlayPage() {
           <Link href="/" className="font-medium text-slate-700 underline">
             看看介绍页
           </Link>
+          <span className="mx-2 text-slate-300">·</span>
+          <Link href="/stories" className="font-medium text-slate-700 underline">
+            互动故事
+          </Link>
         </p>
       </div>
     </main>

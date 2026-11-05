@@ -36,6 +36,12 @@ export default function Home() {
               >
                 今天带娃抽什么
               </Link>
+              <Link
+                href="/stories"
+                className="inline-flex min-h-12 items-center justify-center rounded-full bg-sky-600 px-6 py-3 text-base font-semibold text-white shadow-lg shadow-sky-600/15"
+              >
+                互动故事
+              </Link>
               <CopyPlayLink />
               <Link
                 href="/profile?next=/play"
@@ -109,6 +115,35 @@ export default function Home() {
             <p className="mt-2 text-sm leading-7 text-slate-600">
               通过“喜欢 / 不适合 / 已去过”，下次推荐会更贴近你家。
             </p>
+          </div>
+        </section>
+
+        <section className="grid items-center gap-5 rounded-[28px] border border-sky-100 bg-white px-4 py-5 shadow-sm sm:rounded-[36px] sm:grid-cols-[1.15fr_0.85fr] sm:px-6 sm:py-6">
+          <div>
+            <div className="text-sm font-semibold text-sky-600">投屏互动故事</div>
+            <h2 className="mt-2 text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
+              出门坐地铁、玩挖掘机，
+              <br />
+              选不同，结果就不同。
+            </h2>
+            <p className="mt-3 text-sm leading-7 text-slate-600">
+              投到电视上。家长念画面上的话，和孩子商量，再帮忙点。
+              叫出中文和英文名字，故事才会继续。推开别人时会看见警车，也可以重新选。
+            </p>
+          </div>
+          <div className="flex flex-col gap-3">
+            <Link
+              href="/stories/subway"
+              className="inline-flex min-h-12 items-center justify-center rounded-full bg-slate-950 px-5 text-base font-bold text-white"
+            >
+              今天坐地铁
+            </Link>
+            <Link
+              href="/stories/share-toy"
+              className="inline-flex min-h-12 items-center justify-center rounded-full border border-slate-200 bg-white px-5 text-base font-bold text-slate-800"
+            >
+              一辆挖掘机
+            </Link>
           </div>
         </section>
 
