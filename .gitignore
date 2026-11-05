@@ -42,3 +42,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local shortcut to public/videos; the files themselves live in public/videos
+/videos
