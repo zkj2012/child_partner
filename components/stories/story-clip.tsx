@@ -15,9 +15,31 @@ export function StoryClip({ src, label, bare = false }: { src: string; label: st
     const video = videoRef.current;
     if (!video) return;
 
+    let cancelled = false;
+    let started = false;
     const onEnded = () => holdLastFrame(video);
+    const tryPlay = () => {
+      if (cancelled || started) return;
+      started = true;
+      void video.play().catch(() => {
+        started = false;
+      });
+    };
+
     video.addEventListener("ended", onEnded);
-    return () => video.removeEventListener("ended", onEnded);
+    video.addEventListener("canplay", tryPlay);
+    video.preload = "auto";
+    video.src = src;
+    if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) tryPlay();
+
+    return () => {
+      cancelled = true;
+      video.removeEventListener("ended", onEnded);
+      video.removeEventListener("canplay", tryPlay);
+      video.pause();
+      video.removeAttribute("src");
+      video.load();
+    };
   }, [src]);
 
   return (
@@ -30,16 +52,12 @@ export function StoryClip({ src, label, bare = false }: { src: string; label: st
     >
       <video
         ref={videoRef}
-        key={src}
         className="block aspect-video w-full bg-[#f6f1e8] object-cover"
-        autoPlay
         muted
         playsInline
-        preload="auto"
+        preload="none"
         aria-label={label}
-      >
-        <source src={src} type="video/mp4" />
-      </video>
+      />
     </div>
   );
 }

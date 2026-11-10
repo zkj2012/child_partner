@@ -122,13 +122,13 @@ export default function Home() {
           <div>
             <div className="text-sm font-semibold text-sky-600">投屏互动故事</div>
             <h2 className="mt-2 text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
-              出门坐地铁、玩挖掘机，
+              出门坐地铁、坐飞机、玩挖掘机，
               <br />
               不开心了可以说出来。
             </h2>
             <p className="mt-3 text-sm leading-7 text-slate-600">
-              投到电视上。家长念画面上的话，和孩子商量，再帮忙点。
-              叫出中文和英文名字，故事才会继续。打人会痛，救护车会来，也可以重新选。
+              投到电视上。家长和孩子商量，再帮忙点。叫出中文和英文名字，故事才会继续。
+              飞机上要坐好，坐好了空姐会送小礼物。打人会痛，救护车会来，也可以重新选。
             </p>
           </div>
           <div className="flex flex-col gap-3">
@@ -149,6 +149,12 @@ export default function Home() {
               className="inline-flex min-h-12 items-center justify-center rounded-full border border-slate-200 bg-white px-5 text-base font-bold text-slate-800"
             >
               不开心了
+            </Link>
+            <Link
+              href="/stories/plane"
+              className="inline-flex min-h-12 items-center justify-center rounded-full border border-slate-200 bg-white px-5 text-base font-bold text-slate-800"
+            >
+              坐飞机
             </Link>
           </div>
         </section>

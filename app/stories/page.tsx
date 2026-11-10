@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { StoryClip } from "@/components/stories/story-clip";
 import { StoryStage } from "@/components/stories/story-stage";
 import { stories } from "@/lib/stories";
 
@@ -25,8 +24,12 @@ export default function StoriesPage() {
               href={`/stories/${story.id}`}
               className="overflow-hidden rounded-[32px] bg-white shadow-sm ring-1 ring-orange-100"
             >
-              {story.coverVideo ? (
-                <StoryClip src={story.coverVideo} label={story.title} bare />
+              {story.coverPoster ? (
+                <img
+                  src={story.coverPoster}
+                  alt={story.title}
+                  className="block aspect-video w-full bg-[#f6f1e8] object-cover"
+                />
               ) : (
                 <StoryStage scene={story.cover} label={story.title} bare />
               )}

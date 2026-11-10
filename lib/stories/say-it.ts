@@ -14,7 +14,7 @@ export const sayItStory = {
   wash: "bg-[radial-gradient(circle_at_top,#ffe4e6_0%,#fff7ed_48%,#fffaf5_100%)]",
   chipClass: "bg-rose-50 text-rose-700",
   cover: "feel-fall",
-  coverVideo: clip("feel01"),
+  coverPoster: "/posters/say-it.jpg",
   start: "play",
   beats: defineBeats([
     {

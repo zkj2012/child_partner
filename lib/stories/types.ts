@@ -37,7 +37,21 @@ export type SceneId =
   | "feel-hit"
   | "feel-ambulance"
   | "feel-hospital"
-  | "feel-sorry";
+  | "feel-sorry"
+  | "plane-trip"
+  | "plane-airport"
+  | "plane-board"
+  | "plane-seat"
+  | "plane-belt"
+  | "plane-fly"
+  | "plane-cloud"
+  | "plane-still"
+  | "plane-bump"
+  | "plane-crew"
+  | "plane-gift"
+  | "plane-stand"
+  | "plane-shake"
+  | "plane-hold";
 
 export type StoryConcept = {
   zh: string;
@@ -87,7 +101,7 @@ export type Story = {
   wash: string;
   chipClass: string;
   cover: SceneId;
-  coverVideo?: string;
+  coverPoster?: string;
   start: string;
   beats: Record<string, StoryBeat>;
 };

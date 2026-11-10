@@ -15,7 +15,7 @@ export const shareToyStory = {
   wash: "bg-[radial-gradient(circle_at_top,#dcfce7_0%,#fff7ed_48%,#fffaf5_100%)]",
   chipClass: "bg-emerald-50 text-emerald-700",
   cover: "toy-yard",
-  coverVideo: clip("scene01"),
+  coverPoster: "/posters/share-toy.jpg",
   start: "yard",
   beats: defineBeats([
     {

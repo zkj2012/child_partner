@@ -15,7 +15,7 @@ export const subwayStory = {
   wash: "bg-[radial-gradient(circle_at_top,#e0f2fe_0%,#fff7ed_46%,#fffaf5_100%)]",
   chipClass: "bg-sky-50 text-sky-700",
   cover: "metro-morning",
-  coverVideo: clip("metro01"),
+  coverPoster: "/posters/subway.jpg",
   start: "depart",
   beats: defineBeats([
     {
